@@ -1,4 +1,4 @@
-export type GenerationStatus = 'queued' | 'generating' | 'completed' | 'failed';
+export type GenerationStatus = 'pending' | 'generating' | 'completed' | 'failed';
 
 export type Version = {
   id: string;

@@ -1,17 +1,11 @@
 import './globals.css';
 import Providers from './providers';
-import { IBM_Plex_Sans, Space_Grotesk } from 'next/font/google';
+import { Inter } from 'next/font/google';
 
-const display = Space_Grotesk({
-  subsets: ['latin'],
-  variable: '--font-display',
-  weight: ['400', '500', '600', '700']
-});
-
-const body = IBM_Plex_Sans({
+const body = Inter({
   subsets: ['latin'],
   variable: '--font-body',
-  weight: ['300', '400', '500', '600']
+  weight: ['400', '500', '600', '700']
 });
 
 export const metadata = {
@@ -25,7 +19,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${display.variable} ${body.variable}`}>
+    <html lang="en" className={body.variable}>
       <body className="selection-glow">
         <Providers>{children}</Providers>
       </body>

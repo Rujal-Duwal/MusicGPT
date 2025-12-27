@@ -6,13 +6,16 @@ A polished “Create Music” experience that mirrors MusicGPT’s prompt-to-mus
 ## Tech Stack
 - Next.js (App Router)
 - Tailwind CSS
-- Node.js (Express + ws)
-- WebSockets for realtime state
+- Node.js (custom Next server)
+- Socket.io (real-time sync)
+- Zustand (global state)
 
 ## Architecture
 - `app/` hosts the UI and layout. The main screen composes the prompt box, profile popup, and recent generations panel.
-- `components/music-context.tsx` owns global state, WebSocket subscription, and REST submission helpers.
-- `server/index.js` is a lightweight mock server that accepts prompt submissions, emits generation progress over WebSockets, and simulates pagination.
+- `lib/music-store.ts` owns the global state and REST submission helpers (Zustand).
+- `components/music-provider.tsx` wires socket.io events into the store for real-time sync.
+- `server/index.js` boots the Next.js app and attaches socket.io for real-time events.
+- `app/api/*` route handlers simulate prompt submissions and pagination, emitting socket.io events.
 
 ## Running Locally
 ```bash
@@ -20,9 +23,7 @@ npm install
 npm run dev
 ```
 
-This starts:
-- Next.js UI on `http://localhost:3000`
-- Mock server on `http://localhost:4000`
+This starts the Next.js app and socket.io server on `http://localhost:3000`.
 
 ## Build + Start
 ```bash
@@ -32,9 +33,8 @@ npm start
 
 ## Environment Variables (Optional)
 ```bash
-NEXT_PUBLIC_API_BASE=http://localhost:4000
-NEXT_PUBLIC_WS_URL=ws://localhost:4000/ws
-PORT=4000
+NEXT_PUBLIC_WS_URL=http://localhost:3000
+PORT=3000
 ```
 
 ## Design Notes
