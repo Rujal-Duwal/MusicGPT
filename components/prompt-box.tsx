@@ -53,6 +53,10 @@ const randomPrompts = [
 ];
 
 export default function PromptBox() {
+  const minTextareaHeight = 50;
+  const maxTextareaHeight = 140;
+  const collapsedShellOffset = 60;
+  const expandedShellOffset = 60;
   const submitPrompt = useMusicStore((state) => state.submitPrompt);
   const isSubmitting = useMusicStore((state) => state.isSubmitting);
   const [prompt, setPrompt] = useState("");
@@ -61,6 +65,7 @@ export default function PromptBox() {
   const [placeholderVisible, setPlaceholderVisible] = useState(true);
   const [isInstrumental, setIsInstrumental] = useState(false);
   const [includeLyrics, setIncludeLyrics] = useState(false);
+  const [textareaHeight, setTextareaHeight] = useState(minTextareaHeight);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   useEffect(() => {
@@ -81,9 +86,26 @@ export default function PromptBox() {
     };
   }, []);
 
-  const isExpanded = focused || prompt.trim().length > 0;
+  useEffect(() => {
+    const textarea = textareaRef.current;
+    if (!textarea) {
+      return;
+    }
+    textarea.style.height = "auto";
+    const nextHeight = Math.min(
+      maxTextareaHeight,
+      Math.max(minTextareaHeight, textarea.scrollHeight)
+    );
+    textarea.style.height = `${nextHeight}px`;
+    setTextareaHeight(nextHeight);
+  }, [prompt, maxTextareaHeight, minTextareaHeight]);
+
+  const isExpanded =
+    prompt.trim().length > 0 || textareaHeight > minTextareaHeight;
   const promptDisabled = isSubmitting || !prompt.trim();
-  const shellHeight = isExpanded ? 156 : 124;
+  const shellHeight = isExpanded
+    ? textareaHeight + expandedShellOffset
+    : minTextareaHeight + collapsedShellOffset;
 
   const handleSubmit = async () => {
     if (!prompt.trim()) {
@@ -115,12 +137,11 @@ export default function PromptBox() {
         className="relative mx-auto w-full max-w-[800px] transition-[height] duration-200"
         style={{ height: `${shellHeight}px` }}
       >
-        <span className="absolute inset-0 z-[1]">
-          <i className="Anim12 isVisible" />
-        </span>
-        {/* <span className="absolute inset-0 z-[2]">
-          <i className="Anim11 isVisible" />
-        </span> */}
+        {!focused && (
+          <span className="absolute inset-0 z-[1]">
+            <i className="Anim12 isVisible" />
+          </span>
+        )}
         <div className="group/PromptConfigurator relative z-20 h-full w-full rounded-[27px] bg-omniBgNormal transition duration-200">
           <div className="h-full w-full">
             <form
@@ -136,8 +157,8 @@ export default function PromptBox() {
               <div className="pt-[20px]">
                 <div data-name="rotating-text" className="relative">
                   {!prompt && (
-                    <div className="pointer-events-none absolute left-[22px] top-[10px] z-0 h-[56px] w-full overflow-hidden bg-transparent">
-                      <div className="absolute top-[10px] z-0 bg-transparent pointer-events-none h-[32px] w-[calc(100%-40px)]">
+                    <div className="pointer-events-none absolute left-[22px] top-[8px] z-0 h-[44px] w-full overflow-hidden bg-transparent">
+                      <div className="absolute top-[8px] z-0 bg-transparent pointer-events-none h-[24px] w-[calc(100%-40px)]">
                         <div
                           className={`text-neutral-800 tracking-[.32px] transition duration-300 ${
                             placeholderVisible
@@ -158,8 +179,8 @@ export default function PromptBox() {
                     onBlur={() => setFocused(false)}
                     maxLength={360}
                     spellCheck
-                    className="px-[20px] py-[20px] mt-[-20px] block outline-none resize-none pretty-scrollbar-2 w-full bg-transparent text-base text-white h-[66px]"
-                    style={{ height: "64px" }}
+                    className="px-[20px] py-[14px] mt-[-20px] block outline-none resize-none pretty-scrollbar-2 w-full bg-transparent text-base text-white overflow-y-auto"
+                    style={{ height: `${textareaHeight}px` }}
                   />
                 </div>
               </div>
