@@ -137,7 +137,7 @@ export default function PromptBox() {
         className="relative mx-auto w-full max-w-[800px] transition-[height] duration-200"
         style={{ height: `${shellHeight}px` }}
       >
-        {!focused && (
+        {!focused && !prompt && (
           <span className="absolute inset-0 z-[1]">
             <i className="Anim12 isVisible" />
           </span>
