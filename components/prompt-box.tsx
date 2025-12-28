@@ -1,61 +1,61 @@
-'use client';
+"use client";
 
-import { useEffect, useRef, useState } from 'react';
-import { useMusicStore } from '@/lib/music-store';
+import { useEffect, useRef, useState } from "react";
+import { useMusicStore } from "@/lib/music-store";
 
 const placeholders = [
-  'Warm acoustic Christmas song for a family gathering',
-  'Cinematic strings rising into a calm finale',
-  'Snowy lo-fi beats with warm vinyl hiss',
-  'Ambient choir pads with distant bells',
-  'Neon synthwave chase at 118 BPM'
+  "Warm acoustic Christmas song for a family gathering",
+  "Cinematic strings rising into a calm finale",
+  "Snowy lo-fi beats with warm vinyl hiss",
+  "Ambient choir pads with distant bells",
+  "Neon synthwave chase at 118 BPM",
 ];
 
 const presetPrompts = [
   {
-    id: 'create-song',
-    label: 'Create song',
-    prompt: 'Warm acoustic Christmas song for a family gathering',
-    icon: '/svg/icon-randomizer-create-song.svg'
+    id: "create-song",
+    label: "Create song",
+    prompt: "Warm acoustic Christmas song for a family gathering",
+    icon: "/svg/icon-randomizer-create-song.svg",
   },
   {
-    id: 'create-sound',
-    label: 'Create Sound',
-    prompt: 'Crackling fireplace, gentle wind, midnight calm',
-    icon: '/svg/icon-randomizer-create-sound.svg'
+    id: "create-sound",
+    label: "Create Sound",
+    prompt: "Crackling fireplace, gentle wind, midnight calm",
+    icon: "/svg/icon-randomizer-create-sound.svg",
   },
   {
-    id: 'speak-text',
-    label: 'Speak text',
+    id: "speak-text",
+    label: "Speak text",
     prompt: 'Text to speech: "Welcome to the winter night"',
-    icon: '/svg/icon-randomizer-speak-text.svg'
+    icon: "/svg/icon-randomizer-speak-text.svg",
   },
   {
-    id: 'change-file',
-    label: 'Change file',
-    prompt: 'Remix with deeper bass and hazy pads',
-    icon: '/svg/icon-randomizer-change-file.svg'
+    id: "change-file",
+    label: "Change file",
+    prompt: "Remix with deeper bass and hazy pads",
+    icon: "/svg/icon-randomizer-change-file.svg",
   },
   {
-    id: 'random',
-    label: 'Random',
-    prompt: '',
-    icon: '/svg/icon-randomizer-random.svg'
-  }
+    id: "random",
+    label: "Random",
+    prompt: "",
+    icon: "/svg/icon-randomizer-random.svg",
+  },
 ];
 
 const randomPrompts = [
-  'Crisp trap beat with icy bells and sub bass',
-  'Acoustic folk lullaby with soft harmonies and rain',
-  'Retro synthwave chase scene at 118 BPM',
-  'Slow-burning techno with airy percussion',
-  'Minimal piano motif with glowing textures'
+  "Crisp trap beat with icy bells and sub bass",
+  "Acoustic folk lullaby with soft harmonies and rain",
+  "Retro synthwave chase scene at 118 BPM",
+  "Slow-burning techno with airy percussion",
+  "Minimal piano motif with glowing textures",
 ];
 
 export default function PromptBox() {
   const submitPrompt = useMusicStore((state) => state.submitPrompt);
   const isSubmitting = useMusicStore((state) => state.isSubmitting);
-  const [prompt, setPrompt] = useState('');
+  const [prompt, setPrompt] = useState("");
   const [focused, setFocused] = useState(false);
   const [placeholderIndex, setPlaceholderIndex] = useState(0);
   const [placeholderVisible, setPlaceholderVisible] = useState(true);
@@ -90,17 +90,18 @@ export default function PromptBox() {
       return;
     }
     const tags = [
-      isInstrumental ? 'Instrumental' : null,
-      includeLyrics ? 'Lyrics' : null
+      isInstrumental ? "Instrumental" : null,
+      includeLyrics ? "Lyrics" : null,
     ].filter(Boolean);
-    const fullPrompt = tags.length ? `${prompt} (${tags.join(', ')})` : prompt;
+    const fullPrompt = tags.length ? `${prompt} (${tags.join(", ")})` : prompt;
     await submitPrompt(fullPrompt);
-    setPrompt('');
+    setPrompt("");
   };
 
   const handlePresetClick = (preset: (typeof presetPrompts)[number]) => {
-    if (preset.id === 'random') {
-      const next = randomPrompts[Math.floor(Math.random() * randomPrompts.length)];
+    if (preset.id === "random") {
+      const next =
+        randomPrompts[Math.floor(Math.random() * randomPrompts.length)];
       setPrompt(next);
     } else {
       setPrompt(preset.prompt);
@@ -117,9 +118,9 @@ export default function PromptBox() {
         <span className="absolute inset-0 z-[1]">
           <i className="Anim12 isVisible" />
         </span>
-        <span className="absolute inset-0 z-[2]">
+        {/* <span className="absolute inset-0 z-[2]">
           <i className="Anim11 isVisible" />
-        </span>
+        </span> */}
         <div className="group/PromptConfigurator relative z-20 h-full w-full rounded-[27px] bg-omniBgNormal transition duration-200">
           <div className="h-full w-full">
             <form
@@ -139,7 +140,9 @@ export default function PromptBox() {
                       <div className="absolute top-[10px] z-0 bg-transparent pointer-events-none h-[32px] w-[calc(100%-40px)]">
                         <div
                           className={`text-neutral-800 tracking-[.32px] transition duration-300 ${
-                            placeholderVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-[10px]'
+                            placeholderVisible
+                              ? "opacity-100 translate-y-0"
+                              : "opacity-0 translate-y-[10px]"
                           }`}
                         >
                           {placeholders[placeholderIndex]}
@@ -156,7 +159,7 @@ export default function PromptBox() {
                     maxLength={360}
                     spellCheck
                     className="px-[20px] py-[20px] mt-[-20px] block outline-none resize-none pretty-scrollbar-2 w-full bg-transparent text-base text-white h-[66px]"
-                    style={{ height: '64px' }}
+                    style={{ height: "64px" }}
                   />
                 </div>
               </div>
@@ -193,7 +196,7 @@ export default function PromptBox() {
                   <button
                     type="button"
                     className={`relative text-sm text-white flex items-center justify-center gap-sm border-1 border-neutral-500 hover:border-[#44484c] hover:bg-[#3a3e42] active:scale-95 transition rounded-4.5 h-9 px-base z-[1] w-full sm:w-auto ${
-                      isInstrumental ? 'bg-neutral-400 border-neutral-600' : ''
+                      isInstrumental ? "bg-neutral-400 border-neutral-600" : ""
                     }`}
                     onClick={() => setIsInstrumental((value) => !value)}
                   >
@@ -212,7 +215,7 @@ export default function PromptBox() {
                   <button
                     type="button"
                     className={`relative text-sm text-white flex items-center justify-center gap-sm border-1 border-neutral-500 hover:border-[#44484c] hover:bg-[#3a3e42] active:scale-95 transition rounded-4.5 h-9 px-base z-[1] w-full sm:w-auto ${
-                      includeLyrics ? 'bg-neutral-400 border-neutral-600' : ''
+                      includeLyrics ? "bg-neutral-400 border-neutral-600" : ""
                     }`}
                     onClick={() => setIncludeLyrics((value) => !value)}
                   >
@@ -244,7 +247,7 @@ export default function PromptBox() {
                           width="24"
                           height="24"
                           className={`h-full w-full object-cover transition duration-100 ${
-                            promptDisabled ? 'opacity-40' : 'opacity-100'
+                            promptDisabled ? "opacity-40" : "opacity-100"
                           }`}
                           src="/svg/icon-arrow-right-black.svg"
                         />
@@ -286,7 +289,13 @@ export default function PromptBox() {
               onClick={() => handlePresetClick(preset)}
             >
               <span className="block h-5 w-5 shrink-0 grow-0">
-                <img alt="" src={preset.icon} width="24" height="24" className="h-full w-full object-cover" />
+                <img
+                  alt=""
+                  src={preset.icon}
+                  width="24"
+                  height="24"
+                  className="h-full w-full object-cover"
+                />
               </span>
               <span>{preset.label}</span>
             </button>

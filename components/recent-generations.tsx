@@ -1,8 +1,65 @@
-'use client';
+"use client";
 
-import { useMemo } from 'react';
-import { useMusicStore } from '@/lib/music-store';
-import { GenerationRow } from '@/components/generation-row';
+import { useMemo } from "react";
+import { useMusicStore } from "@/lib/music-store";
+import type { Generation } from "@/lib/types";
+import { GenerationRow } from "@/components/generation-row";
+
+type SongItemProps = {
+  title: string;
+  description: string;
+  palette: [string, string];
+  imageUrl?: string;
+};
+
+const fallbackPalette: [string, string] = ["#2b2f33", "#3a3e42"];
+
+const getTitle = (item: Generation) =>
+  item.versions?.[0]?.title ?? "Sound Creator";
+
+function SongItem({ title, description, palette, imageUrl }: SongItemProps) {
+  return (
+    <div className="flex items-start gap-4">
+      <div className="relative w-20 h-20 rounded-lg overflow-hidden flex-shrink-0 bg-skeleton">
+        {imageUrl ? (
+          <img
+            src={imageUrl}
+            alt={title}
+            className="h-full w-full object-cover"
+          />
+        ) : (
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage: `linear-gradient(135deg, ${palette[0]}, ${palette[1]})`,
+            }}
+          />
+        )}
+      </div>
+      <div className="flex flex-col gap-1 min-w-0">
+        <h3 className="text-song-title text-lg font-medium truncate">
+          {title}
+        </h3>
+        <p className="text-song-description text-base truncate">
+          {description}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function SongSkeleton() {
+  return (
+    <div className="flex items-center gap-4">
+      <div className="w-20 h-20 rounded-lg bg-skeleton flex-shrink-0" />
+      <div className="flex flex-col gap-2 flex-1">
+        <div className="h-5 w-48 rounded-full bg-skeleton" />
+        <div className="h-5 w-80 rounded-full bg-skeleton" />
+      </div>
+      <div className="w-8 h-8 rounded-full bg-skeleton flex-shrink-0" />
+    </div>
+  );
+}
 
 export default function RecentGenerations() {
   const items = useMusicStore((state) => state.items);
@@ -27,9 +84,11 @@ export default function RecentGenerations() {
               disabled={isPaginating}
               className="tracking-wide text-sm leading-tight flex shrink-0 items-center gap-sm justify-self-center px-3 h-9 rounded-4.5 transition duration-100 border-1 border-neutral-500 text-white/70 hover:border-[#44484c] hover:bg-[#1d2125] active:scale-95 disabled:opacity-40"
             >
-              {isPaginating ? 'Loading' : 'Load more'}
+              {isPaginating ? "Loading" : "Load more"}
             </button>
-            <span className={`status-dot ${connection === 'open' ? '' : 'offline'}`} />
+            <span
+              className={`status-dot ${connection === "open" ? "" : "offline"}`}
+            />
           </div>
         </div>
 
@@ -41,20 +100,29 @@ export default function RecentGenerations() {
 
         {showEmpty ? (
           <div className="mt-4 rounded-6 border-1 border-neutral-300 bg-neutral-200/70 px-4 py-6 text-center">
-            <p className="text-sm font-semibold text-neutral-5000">Start creating music</p>
+            <p className="text-sm font-semibold text-neutral-5000">
+              Start creating music
+            </p>
             <p className="mt-2 text-xs text-neutral-1000">
-              Submit a prompt above to see live progress and completed generations.
+              Submit a prompt above to see live progress and completed
+              generations.
             </p>
           </div>
         ) : (
-          <div data-name="CreatePageAudioList" className="mt-4 grid grid-cols-1 gap-y-1">
-            {visibleItems.map((item) => (
-              <GenerationRow key={item.id} item={item} showVersions />
-            ))}
-            {isPaginating &&
-              [0, 1].map((item) => (
-                <div key={item} className="skeleton h-[76px] rounded-6 bg-neutral-200/70" />
-              ))}
+          <div className="mt-6 flex flex-col gap-5">
+            {visibleItems.map((item) =>
+              item.status === "completed" ? (
+                <SongItem
+                  key={item.id}
+                  title={getTitle(item)}
+                  description={item.prompt}
+                  palette={item.versions?.[0]?.palette ?? fallbackPalette}
+                />
+              ) : (
+                <GenerationRow key={item.id} item={item} showVersions />
+              )
+            )}
+            {isPaginating && [0, 1].map((item) => <SongSkeleton key={item} />)}
           </div>
         )}
       </div>

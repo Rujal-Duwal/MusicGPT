@@ -1,5 +1,7 @@
 "use client";
 
+import ModelV6 from "./model-v6";
+
 const navLinks = [
   { label: "Home", icon: "/svg/icon-home.svg", active: false },
   { label: "Create", icon: "/svg/icon-star-filled.svg", active: true },
@@ -139,19 +141,7 @@ export default function Sidebar() {
         data-name="SidebarFooterSection"
         className="flex flex-col gap-5 px-5 py-4 sm:p-4"
       >
-        <div className="flex flex-col gap-0.5 py-2.5 px-3 rounded-[12px] border-1 border-dashed border-white bg-[#B11E31]">
-          <div className="flex flex-col items-center justify-center gap-2">
-            <h4 className="text-sm font-semibold leading-[18px] tracking-[0.12px] text-[#FFF4E0]">
-              Christmas 40% Off Yearly Plans
-            </h4>
-            <button
-              type="button"
-              className="h-9 w-full rounded-[12px] bg-[#033C1D] text-[#FFF4E0] flex items-center justify-center gap-1 text-sm font-semibold leading-[150%] hover:bg-[#044B24] transition-colors duration-200 px-3 py-2"
-            >
-              19:43:28
-            </button>
-          </div>
-        </div>
+        <ModelV6 className="w-full" />
         <div className="flex flex-row flex-wrap items-center text-sm text-white/50 gap-x-6 gap-y-5 sm:gap-x-3 sm:gap-y-1">
           {["Pricing", "Affiliate", "API", "About", "Terms", "Privacy"].map(
             (item) => (

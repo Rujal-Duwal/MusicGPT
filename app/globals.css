@@ -79,6 +79,10 @@
     background-color: #3a3e42;
   }
 
+  .bg-skeleton {
+    background-color: #1d2125;
+  }
+
   .bg-neutral-600 {
     background-color: #44484c;
   }
@@ -115,6 +119,14 @@
     color: #505458;
   }
 
+  .text-song-title {
+    color: #bfc2c8;
+  }
+
+  .text-song-description {
+    color: #5d6165;
+  }
+
   .border-neutral-300 {
     border-color: #262a2e;
   }
@@ -144,11 +156,19 @@
   }
 
   .bg-gradientOmniBoxWhite {
-    background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0));
+    background-image: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.04),
+      rgba(255, 255, 255, 0)
+    );
   }
 
   .bg-gradientBgProgressBar {
-    background-image: linear-gradient(90deg, rgba(35, 38, 43, 0), rgba(35, 38, 43, 1));
+    background-image: linear-gradient(
+      90deg,
+      rgba(35, 38, 43, 0),
+      rgba(35, 38, 43, 1)
+    );
   }
 
   .border-t-1 {
@@ -192,11 +212,12 @@ body {
   overflow: visible;
   background: #1d2125;
   box-shadow: 0 22px 60px rgba(0, 0, 0, 0.45);
-  transition: height 0.2s ease-out, transform 0.2s ease-out, box-shadow 0.2s ease-out;
+  transition: height 0.2s ease-out, transform 0.2s ease-out,
+    box-shadow 0.2s ease-out;
   height: 124px;
 }
 
-.prompt-shell[data-expanded='true'] {
+.prompt-shell[data-expanded="true"] {
   height: 156px;
   transform: translateY(-2px);
   box-shadow: 0 36px 80px rgba(0, 0, 0, 0.6);
@@ -219,7 +240,7 @@ body {
 
 .Anim11::before,
 .Anim11::after {
-  content: '';
+  content: "";
   position: absolute;
   left: -2px;
   top: -2px;
@@ -239,7 +260,7 @@ body {
 
 .Anim12::before,
 .Anim12::after {
-  content: '';
+  content: "";
   position: absolute;
   left: -2px;
   top: -2px;
@@ -247,15 +268,17 @@ body {
   width: calc(100% + 4px);
   height: calc(100% + 4px);
   z-index: -1;
-  background-image: linear-gradient(90deg, #7b5bff, #ff6b6b, #ffd166, #7b5bff);
+  background-image: linear-gradient(90deg, #7b5bff, #000000, #ffd166, #7b5bff);
   background-size: 2000px 100%;
-  animation: Anim12Motion 15s linear infinite;
-}
-
-.Anim12::after {
-  filter: blur(30px);
+  animation: Anim12Motion 10s linear infinite;
+  filter: blur(10px);
   opacity: 0.8;
 }
+
+/* .Anim12::after {
+  filter: blur(10px);
+  opacity: 0.8;
+} */
 
 .prompt-shell-inner {
   position: relative;
@@ -352,7 +375,7 @@ body {
   border-color: rgb(68 72 76);
 }
 
-.prompt-toggle[data-active='true'] {
+.prompt-toggle[data-active="true"] {
   background: rgb(48 52 56);
   border-color: rgb(68 72 76);
 }
@@ -546,11 +569,16 @@ body {
 }
 
 .skeleton::after {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   transform: translateX(-120%);
-  background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255, 255, 255, 0.08),
+    transparent
+  );
   animation: shimmer 1.6s linear infinite;
 }
 
@@ -611,7 +639,7 @@ body {
 }
 
 @property --scrollbar-opacity {
-  syntax: '<number>';
+  syntax: "<number>";
   inherits: true;
   initial-value: 0;
 }
@@ -636,7 +664,7 @@ body {
 }
 
 @property --r2 {
-  syntax: '<angle>';
+  syntax: "<angle>";
   inherits: false;
   initial-value: 0deg;
 }
@@ -675,7 +703,7 @@ body {
 }
 
 .animate-rotateGradient::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   border-radius: inherit;
@@ -717,7 +745,7 @@ body {
 .SpinningGradient1::before,
 .SpinningGradient1::after {
   position: absolute;
-  content: '';
+  content: "";
   display: block;
   width: 100%;
   height: 100%;
@@ -727,7 +755,11 @@ body {
   top: 25%;
   left: 25%;
   transform: scale(2.5);
-  background: linear-gradient(180deg, rgba(132, 36, 241, 0.9), rgba(85, 23, 241, 0) 80%);
+  background: linear-gradient(
+    180deg,
+    rgba(132, 36, 241, 0.9),
+    rgba(85, 23, 241, 0) 80%
+  );
   animation: SpinningGradient1__Rotation 6s linear infinite;
 }
 
@@ -735,7 +767,11 @@ body {
   top: 0;
   left: 0;
   transform: scale(2.1);
-  background: linear-gradient(180deg, rgba(157, 47, 75, 1), rgba(127, 0, 222, 0) 60%);
+  background: linear-gradient(
+    180deg,
+    rgba(157, 47, 75, 1),
+    rgba(127, 0, 222, 0) 60%
+  );
   animation: SpinningGradient1__Rotation 4s linear infinite;
 }
 
