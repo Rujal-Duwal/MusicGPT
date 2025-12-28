@@ -1,8 +1,8 @@
-import PromptBox from "@/components/prompt-box";
-import ProfilePanel from "@/components/profile-panel";
-import RecentGenerations from "@/components/recent-generations";
-import Sidebar from "@/components/sidebar";
-import FloatingPlayer from "@/components/floating-player";
+import PromptBox from "@/components/organisms/prompt-box";
+import ProfilePanel from "@/components/organisms/profile-panel";
+import RecentGenerations from "@/components/organisms/recent-generations";
+import Sidebar from "@/components/organisms/sidebar";
+import FloatingPlayer from "@/components/organisms/floating-player";
 
 export default function Home() {
   return (

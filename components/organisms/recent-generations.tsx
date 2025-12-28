@@ -3,7 +3,7 @@
 import { useMemo } from "react";
 import { useMusicStore } from "@/lib/music-store";
 import type { Generation } from "@/lib/types";
-import { GenerationRow } from "@/components/generation-row";
+import { GenerationRow } from "@/components/molecules/generation-row";
 
 type SongItemProps = {
   title: string;

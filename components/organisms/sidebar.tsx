@@ -1,6 +1,6 @@
 "use client";
 
-import ModelV6 from "./model-v6";
+import ModelV6 from "@/components/atoms/model-v6";
 
 const navLinks = [
   { label: "Home", icon: "/svg/icon-home.svg", active: false },
