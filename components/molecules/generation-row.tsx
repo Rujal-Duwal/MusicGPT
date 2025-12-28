@@ -1,6 +1,7 @@
 "use client";
 
 import type { Generation, Version } from "@/lib/types";
+import styles from "./generation-row.module.css";
 
 const fallbackPalette: [string, string] = ["#2b2f33", "#3a3e42"];
 
@@ -128,21 +129,12 @@ export function GenerationRow({
             }`}
           >
             <span className="block absolute inset-0" style={{ opacity: 1 }}>
-              <i data-name="SpinningGradient1" className="SpinningGradient1" />
+              <i data-name="SpinningGradient1" className={styles.spinningGradient} />
             </span>
             <b className="font-normal text-white opacity-50 absolute inset-0 flex justify-center items-center">
               {progress}%
             </b>
           </span>
-          {/* <span
-            data-name="GenerationItemRoot.PulsatingDot"
-            className={`GenerationItemRoot__pulsatingDot absolute top-[-3px] left-[-3px] transition duration-300 ${
-              showProgress ? "opacity-100" : "opacity-0"
-            }`}
-          >
-            <i />
-            <b />
-          </span> */}
           <div className="flex flex-col absolute left-[70px] right-0 top-[7px]">
             <div
               data-name="LabelPrimary1"

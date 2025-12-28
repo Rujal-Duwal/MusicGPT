@@ -1,0 +1,97 @@
+.animBorder {
+  display: block;
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: all 0.5s linear;
+  pointer-events: none;
+}
+
+.isVisible {
+  opacity: 1;
+}
+
+.animBorder::before,
+.animBorder::after {
+  content: "";
+  position: absolute;
+  left: -2px;
+  top: -2px;
+  border-radius: 28px;
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  z-index: -1;
+  background-image: linear-gradient(90deg, #000000, #7b5bff, #ff7b16, #000000);
+  background-size: 2000px 100%;
+  animation: promptBorderSweep 10s linear infinite;
+  filter: blur(5px);
+  opacity: 0.8;
+}
+
+@keyframes promptBorderSweep {
+  0% {
+    background-position-x: -2000px;
+  }
+  100% {
+    background-position-x: 2000px;
+  }
+}
+
+@property --prompt-rotate {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes promptRotate {
+  0% {
+    --prompt-rotate: 0deg;
+  }
+  25% {
+    --prompt-rotate: 90deg;
+  }
+  50% {
+    --prompt-rotate: 180deg;
+  }
+  75% {
+    --prompt-rotate: 270deg;
+  }
+  100% {
+    --prompt-rotate: 360deg;
+  }
+}
+
+.rotateGradient {
+  position: absolute;
+  border: none;
+  background: conic-gradient(
+    from var(--prompt-rotate),
+    rgba(255, 255, 255, 0.08) 0deg,
+    rgba(255, 255, 255, 0.32) 90deg,
+    rgba(255, 255, 255, 0.8) 180deg,
+    rgba(255, 255, 255, 0.16) 270deg,
+    rgba(255, 255, 255, 0.08) 360deg
+  );
+  animation: promptRotate 3s linear infinite;
+  isolation: isolate;
+}
+
+.rotateGradient::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: inherit;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: exclude;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  padding: 1px;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.rotateGradient > * {
+  position: relative;
+  z-index: 1;
+}

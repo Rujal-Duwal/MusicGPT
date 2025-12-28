@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useMusicStore } from "@/lib/music-store";
+import styles from "./prompt-box.module.css";
 
 const placeholders = [
   "Warm acoustic Christmas song for a family gathering",
@@ -139,7 +140,7 @@ export default function PromptBox() {
       >
         {!focused && !prompt && (
           <span className="absolute inset-0 z-[1]">
-            <i className="Anim12 isVisible" />
+            <i className={`${styles.animBorder} ${styles.isVisible}`} />
           </span>
         )}
         <div className="group/PromptConfigurator relative z-20 h-full w-full rounded-[27px] bg-omniBgNormal transition duration-200">
@@ -280,7 +281,7 @@ export default function PromptBox() {
             </form>
             <button
               type="button"
-              className="transition absolute bottom-3 left-3 sm:bottom-3 sm:left-auto sm:right-[60px] h-9 rounded-4.5 p-[1px] animate-rotateGradient"
+              className={`transition absolute bottom-3 left-3 sm:bottom-3 sm:left-auto sm:right-[60px] h-9 rounded-4.5 p-[1px] ${styles.rotateGradient}`}
               aria-label="Tools"
             >
               <div className="flex items-center gap-[5px] rounded-4.5 px-3 hover:bg-[#303438] bg-omniBgNormal h-full text-sm text-white">

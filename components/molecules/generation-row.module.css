@@ -1,0 +1,87 @@
+.spinningGradient {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  background: #111111;
+  pointer-events: none;
+}
+
+.spinningGradient::before,
+.spinningGradient::after {
+  position: absolute;
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.spinningGradient::before {
+  top: 25%;
+  left: 25%;
+  transform: scale(2.5);
+  background: linear-gradient(
+    180deg,
+    rgba(132, 36, 241, 0.9),
+    rgba(85, 23, 241, 0) 80%
+  );
+  animation: spinningGradientRotation 6s linear infinite;
+}
+
+.spinningGradient::after {
+  top: 0;
+  left: 0;
+  transform: scale(2.1);
+  background: linear-gradient(
+    180deg,
+    rgba(157, 47, 75, 1),
+    rgba(127, 0, 222, 0) 60%
+  );
+  animation: spinningGradientRotation 4s linear infinite;
+}
+
+@keyframes spinningGradientRotation {
+  0% {
+    rotate: 0deg;
+  }
+  100% {
+    rotate: 360deg;
+  }
+}
+
+.pulsatingDot {
+  display: block;
+  width: 16px;
+  height: 16px;
+  pointer-events: none;
+}
+
+.pulsatingDot b,
+.pulsatingDot i {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background-color: #6bffac;
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+  transform: translate(-50%, -50%);
+}
+
+.pulsatingDot i {
+  animation: scaleInAnim 2s ease-in-out infinite;
+  opacity: 0.3;
+}
+
+@keyframes scaleInAnim {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.5;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(2);
+    opacity: 0;
+  }
+}

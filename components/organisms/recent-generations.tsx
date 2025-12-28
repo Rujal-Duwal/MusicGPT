@@ -106,7 +106,11 @@ export default function RecentGenerations() {
               {isPaginating ? "Loading" : "Load more"}
             </button>
             <span
-              className={`status-dot ${connection === "open" ? "" : "offline"}`}
+              className={`h-[9px] w-[9px] rounded-full ${
+                connection === "open"
+                  ? "bg-[#62f7d7] shadow-[0_0_10px_rgba(98,247,215,0.6)]"
+                  : "bg-[#ff7a5a] shadow-[0_0_10px_rgba(255,122,90,0.6)]"
+              }`}
             />
           </div>
         </div>
