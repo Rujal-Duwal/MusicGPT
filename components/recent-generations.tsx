@@ -34,7 +34,7 @@ function SongItem({
       aria-pressed={isActive}
       className="flex w-full items-start gap-4 text-left transition hover:opacity-90"
     >
-      <div className="relative w-20 h-20 rounded-lg overflow-hidden flex-shrink-0 bg-skeleton">
+      <div className="relative w-20 h-20  rounded-lg overflow-hidden flex-shrink-0 bg-skeleton">
         {imageUrl ? (
           <img
             src={imageUrl}
@@ -45,7 +45,10 @@ function SongItem({
           <div
             className="absolute inset-0"
             style={{
-              backgroundImage: `linear-gradient(135deg, ${palette[0]}, ${palette[1]})`,
+              backgroundImage: "url('/svg/loaded.svg')",
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "cover",
             }}
           />
         )}

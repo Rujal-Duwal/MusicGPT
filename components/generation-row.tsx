@@ -18,9 +18,12 @@ function VersionPreview({ version }: { version: Version }) {
         <span>{version.duration}</span>
       </div>
       <div
-        className="mt-2 h-8 rounded-basePlus"
+        className="h-full w-full"
         style={{
-          backgroundImage: `linear-gradient(135deg, ${version.palette[0]}, ${version.palette[1]})`,
+          backgroundImage: "url('/svg/loaded.svg')",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
         }}
       />
       <div className="mt-2 flex items-center gap-2 text-[10px] uppercase tracking-[0.16em] text-neutral-1000">
@@ -131,7 +134,7 @@ export function GenerationRow({
               {progress}%
             </b>
           </span>
-          <span
+          {/* <span
             data-name="GenerationItemRoot.PulsatingDot"
             className={`GenerationItemRoot__pulsatingDot absolute top-[-3px] left-[-3px] transition duration-300 ${
               showProgress ? "opacity-100" : "opacity-0"
@@ -139,7 +142,7 @@ export function GenerationRow({
           >
             <i />
             <b />
-          </span>
+          </span> */}
           <div className="flex flex-col absolute left-[70px] right-0 top-[7px]">
             <div
               data-name="LabelPrimary1"

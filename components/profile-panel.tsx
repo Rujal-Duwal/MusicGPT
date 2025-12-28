@@ -291,8 +291,7 @@ function GenerationCard({
                 height: "64.39px",
                 left: "-46px",
                 top: "25px",
-                background:
-                  "linear-gradient(180deg, #FF6200 0%, #AA00FF 100%)",
+                background: "linear-gradient(180deg, #FF6200 0%, #AA00FF 100%)",
                 filter: "blur(25px)",
                 transform: "matrix(0.99, -0.12, 0.33, 0.94, 0, 0)",
               }}
@@ -304,8 +303,7 @@ function GenerationCard({
                 height: "148.42px",
                 left: "-78px",
                 top: "-9px",
-                background:
-                  "linear-gradient(180deg, #AA00FF 0%, #8962FF 100%)",
+                background: "linear-gradient(180deg, #AA00FF 0%, #8962FF 100%)",
                 filter: "blur(31.5px)",
                 transform: "matrix(0.7, -0.71, 0.95, 0.32, 0, 0)",
               }}
@@ -330,20 +328,15 @@ function GenerationCard({
             style={{ background: item.gradient }}
           />
         )}
-        <div
-          className="absolute inset-0 rounded-[16px]"
-          style={{
-            border: "1px solid transparent",
-            borderImageSlice: 1,
-            borderImageSource:
-              "radial-gradient(227.54% 59.42% at 42.03% 86.23%, #FF6200 0%, rgba(170, 0, 255, 0.5) 30.42%, rgba(0, 0, 0, 0) 100%)",
-          }}
-        />
-        <div className="absolute inset-0 flex items-center justify-center">
-          <span className={`text-[12px] leading-[15px] font-medium ${progressClass}`}>
-            {item.progress}%
-          </span>
-        </div>
+        {item.progress < 100 && (
+          <div className="absolute inset-0 flex items-center justify-center">
+            <span
+              className={`text-[12px] leading-[15px] font-medium ${progressClass}`}
+            >
+              {item.progress}%
+            </span>
+          </div>
+        )}
       </div>
       <div className="flex-1 min-w-0">
         <p className="text-white text-sm truncate">
@@ -390,9 +383,7 @@ export default function ProfilePanel() {
                 : clampProgress(item.progress || 0),
             statusLabel: getStatusLabel(item.status),
             versionLabel: `v${index + 1}`,
-            gradient: palette
-              ? `linear-gradient(135deg, ${palette[0]}, ${palette[1]})`
-              : fallbackGradient,
+            gradient: "center / cover no-repeat url('/svg/loaded.svg')",
             isLoading: item.status !== "completed",
           };
         })
