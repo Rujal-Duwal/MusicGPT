@@ -2,6 +2,7 @@ import PromptBox from "@/components/prompt-box";
 import ProfilePanel from "@/components/profile-panel";
 import RecentGenerations from "@/components/recent-generations";
 import Sidebar from "@/components/sidebar";
+import FloatingPlayer from "@/components/floating-player";
 
 export default function Home() {
   return (
@@ -60,6 +61,7 @@ export default function Home() {
           </div>
         </div>
       </div>
+      <FloatingPlayer />
     </main>
   );
 }

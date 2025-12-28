@@ -21,3 +21,11 @@ export type Generation = {
 };
 
 export type ConnectionState = 'connecting' | 'open' | 'closed';
+
+export type PlayerTrack = {
+  id: string;
+  title: string;
+  prompt: string;
+  palette: [string, string];
+  audioUrl?: string;
+};

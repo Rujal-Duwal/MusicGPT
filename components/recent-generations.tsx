@@ -10,6 +10,8 @@ type SongItemProps = {
   description: string;
   palette: [string, string];
   imageUrl?: string;
+  isActive?: boolean;
+  onClick?: () => void;
 };
 
 const fallbackPalette: [string, string] = ["#2b2f33", "#3a3e42"];
@@ -17,9 +19,21 @@ const fallbackPalette: [string, string] = ["#2b2f33", "#3a3e42"];
 const getTitle = (item: Generation) =>
   item.versions?.[0]?.title ?? "Sound Creator";
 
-function SongItem({ title, description, palette, imageUrl }: SongItemProps) {
+function SongItem({
+  title,
+  description,
+  palette,
+  imageUrl,
+  isActive = false,
+  onClick,
+}: SongItemProps) {
   return (
-    <div className="flex items-start gap-4">
+    <button
+      type="button"
+      onClick={onClick}
+      aria-pressed={isActive}
+      className="flex w-full items-start gap-4 text-left transition hover:opacity-90"
+    >
       <div className="relative w-20 h-20 rounded-lg overflow-hidden flex-shrink-0 bg-skeleton">
         {imageUrl ? (
           <img
@@ -44,7 +58,7 @@ function SongItem({ title, description, palette, imageUrl }: SongItemProps) {
           {description}
         </p>
       </div>
-    </div>
+    </button>
   );
 }
 
@@ -67,6 +81,8 @@ export default function RecentGenerations() {
   const loadMore = useMusicStore((state) => state.loadMore);
   const connection = useMusicStore((state) => state.connection);
   const error = useMusicStore((state) => state.error);
+  const currentTrack = useMusicStore((state) => state.currentTrack);
+  const setTrack = useMusicStore((state) => state.setTrack);
   const visibleItems = useMemo(() => items.slice(0, 6), [items]);
   const showEmpty = !items.length;
 
@@ -110,18 +126,32 @@ export default function RecentGenerations() {
           </div>
         ) : (
           <div className="mt-6 flex flex-col gap-5">
-            {visibleItems.map((item) =>
-              item.status === "completed" ? (
+            {visibleItems.map((item) => {
+              if (item.status !== "completed") {
+                return <GenerationRow key={item.id} item={item} showVersions />;
+              }
+
+              const palette = item.versions?.[0]?.palette ?? fallbackPalette;
+              const title = getTitle(item);
+
+              return (
                 <SongItem
                   key={item.id}
-                  title={getTitle(item)}
+                  title={title}
                   description={item.prompt}
-                  palette={item.versions?.[0]?.palette ?? fallbackPalette}
+                  palette={palette}
+                  isActive={currentTrack?.id === item.id}
+                  onClick={() =>
+                    setTrack({
+                      id: item.id,
+                      title,
+                      prompt: item.prompt,
+                      palette,
+                    })
+                  }
                 />
-              ) : (
-                <GenerationRow key={item.id} item={item} showVersions />
-              )
-            )}
+              );
+            })}
             {isPaginating && [0, 1].map((item) => <SongSkeleton key={item} />)}
           </div>
         )}

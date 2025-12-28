@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import type { ConnectionState, Generation } from '@/lib/types';
+import type { ConnectionState, Generation, PlayerTrack } from '@/lib/types';
 
 type MusicState = {
   items: Generation[];
@@ -7,6 +7,8 @@ type MusicState = {
   isPaginating: boolean;
   error: string | null;
   isSubmitting: boolean;
+  currentTrack: PlayerTrack | null;
+  isPlaying: boolean;
   setConnection: (status: ConnectionState) => void;
   setItems: (items: Generation[]) => void;
   appendItems: (items: Generation[]) => void;
@@ -15,6 +17,9 @@ type MusicState = {
   setPaginating: (value: boolean) => void;
   setError: (message: string | null) => void;
   setSubmitting: (value: boolean) => void;
+  setTrack: (track: PlayerTrack) => void;
+  togglePlay: () => void;
+  clearTrack: () => void;
   submitPrompt: (prompt: string) => Promise<void>;
   loadMore: () => Promise<void>;
 };
@@ -28,6 +33,8 @@ export const useMusicStore = create<MusicState>((set, get) => ({
   isPaginating: false,
   error: null,
   isSubmitting: false,
+  currentTrack: null,
+  isPlaying: false,
   setConnection: (status) => set({ connection: status }),
   setItems: (items) => set({ items: sortItems(items) }),
   appendItems: (items) => set({ items: sortItems([...get().items, ...items]) }),
@@ -51,6 +58,19 @@ export const useMusicStore = create<MusicState>((set, get) => ({
   setPaginating: (value) => set({ isPaginating: value }),
   setError: (message) => set({ error: message }),
   setSubmitting: (value) => set({ isSubmitting: value }),
+  setTrack: (track) =>
+    set((state) => {
+      const isSame = state.currentTrack?.id === track.id;
+      return {
+        currentTrack: track,
+        isPlaying: isSame ? !state.isPlaying : true
+      };
+    }),
+  togglePlay: () =>
+    set((state) =>
+      state.currentTrack ? { isPlaying: !state.isPlaying } : state
+    ),
+  clearTrack: () => set({ currentTrack: null, isPlaying: false }),
   submitPrompt: async (prompt) => {
     if (!prompt.trim()) {
       return;
